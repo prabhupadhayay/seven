@@ -1,0 +1,95 @@
+<mat-card>
+  <div class="row">
+    <div class="col s12 ">
+      <div class="card blue-grey lighten-4">
+        <div class="card-content black-text">
+          <div class="row">
+            <div class='col s5'>
+              <form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm)">
+                <input type="hidden" formControlName="_id" id="_id" [(ngModel)]="productService.selectedProduct._id">
+                <div class="row">
+                  <div class="input-field col s12 ">
+                      <div class="productName form-group">
+                          <label>Product Name:
+                              <label class="red-text">*</label>
+                            </label>
+                        <input type="text"  name="productName"  formControlName="productName" id="productName"class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productName.errors }" [(ngModel)]="productService.selectedProduct.productName" >
+                        <div *ngIf=" (f.productName.dirty || f.productName.touched ||f.productName.pristine) && f.submitted && f.productName.errors" class="invalid-feedback">
+                        <div *ngIf="f.productName.errors.required">Product Name is required</div>
+                      </div>
+                      </div>
+                    <!-- <label>Product Name:
+                      <label class="red-text">*</label>
+                    </label> -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12 ">
+                    <div class="quantity form-group">
+                        <label>Quantity:
+                            <label class="red-text">*</label>
+                          </label>
+                      <input type="number" name="quantity"  formControlName="quantity" id="quantity"class="form-control" [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }" [(ngModel)]="productService.selectedProduct.quantity" min="1" oninput="validity.valid||(value='');" >
+                      <div *ngIf=" (f.quantity.dirty || f.quantity.touched ||f.quantity.pristine) && f.submitted && f.quantity.errors" class="invalid-feedback">
+                      <div *ngIf="f.quantity.errors.required">quantity is required</div>
+                    </div>
+                    </div>
+                    <!-- <label>quantity:</label> -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12  ">
+                    <div class="price form-group">
+                        <label>Price:
+                            <label class="red-text">*</label>
+                          </label>
+                      <input type="number" name="rate"  formControlName="rate"   id="rate"class="form-control" [ngClass]="{ 'is-invalid': submitted && f.rate.errors }" [(ngModel)]="productService.selectedProduct.rate" min="1" oninput="validity.valid||(value='');" >
+                      <div *ngIf=" (f.rate.dirty || f.rate.touched ||f.rate.pristine) && f.submitted && f.rate.errors" class="invalid-feedback">
+                      <div *ngIf="f.rate.errors.required">price is required</div>
+                    </div>
+                    </div>
+                    <!-- <label>Price:</label> -->
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12 form-group">
+                    <button class="btn btn-custom right" type="button" (click)="resetForm(productForm)">Reset</button>
+                    <button class="btn btn-custom right" type="submit" [disabled]='!productForm.valid' >Submit</button>
+                    <!-- <button class="btn btn-custom right" type="button" [disabled]="!productForm.valid"
+                      (click)="onUp(productForm)">Update</button> -->
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col s7">
+              <table class="responsive-table highlight">
+                <thead>
+                  <tr>
+                    <th>ProductName</th>
+                    <th>Quantity</th>
+                    <th>Price:</th>
+                    <!-- <th>status</th> -->
+                    <th></th>
+                  </tr>
+                </thead>
+                <tr *ngFor='let peo of productService.products'>
+                  <td>{{peo.productName}}</td>
+                  <td>{{peo.quantity}}</td>
+                  <td>{{peo.rate}}</td>
+                  <!-- <td>{{peo.Status}}</td> -->
+                  <a class="action-btn" (click)="onEdit(peo)">
+                    <i class="material-icons">edit</i>
+                  </a>
+                  <a class="action-btn" (click)="onDelete(peo._id)">
+                    <i class="material-icons ">delete</i>
+                  </a>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>
